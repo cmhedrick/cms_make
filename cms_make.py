@@ -82,6 +82,7 @@ class Project(object):
                         else:
                             f2.write(line)
                 f2.write('\n')
+                f2.write('import site\n')
                 f2.write('PRODUCTION = False\n')
                 f2.write('\n')
                 f2.write('if PRODUCTION:\n')
@@ -124,9 +125,9 @@ class Project(object):
                 )
                 f2.write(
                     (
-                        "    MEDIA_ROOT = \'/home/" + self.project +
+                        "    MEDIA_ROOT = \'/home/" + self.host +
                         "/webapps/" + (self.project + "_media") + "/\'\n" +
-                        "    STATIC_ROOT = \'/home/" + self.project +
+                        "    STATIC_ROOT = \'/home/" + self.host +
                         "/webapps/" + (self.project + "_static") + "/\'\n"
                     )
                 )
@@ -183,13 +184,10 @@ class Project(object):
                 (self.project + '/requirements_pro.txt')
             ]
         )
-        subprocess.call(
-            [
-                'echo',
-                '\'psycopg2\'',
-                '>>',
-                (self.project + '/requirements_pro.txt')
-            ]
+        os.system(
+            (
+                'echo \'psycopg2\' >>'  + self.project + '/requirements_pro.txt'
+            )
         )
         print 'Requirement Files Made'
 
